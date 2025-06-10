@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from pathlib import Path
 import cv2
 import torch
@@ -22,6 +22,7 @@ class PatternGeneratorApp(QMainWindow):
         self.output_dir_path = None
         self.num_generations = 1
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
+
 
         # Инициализация UI
         self.init_ui()
@@ -298,44 +299,48 @@ tiled, grid, chessboard, perfect symmetry
             target_size = 768 if self.device == "cuda" else 512
             init_image = init_image.resize((target_size, target_size), Image.LANCZOS)
 
-            # Прогресс-диалог
-            progress = QProgressDialog("Генерация паттернов...", "Отмена", 0, self.gen_count.value(), self)
+            # Прогресс-бар
+            total = self.gen_count.value()
+            progress = QProgressDialog("Генерация паттернов...", "Отмена", 0, total, self)
             progress.setWindowTitle("Генерация")
             progress.setWindowModality(Qt.WindowModal)
             progress.setAutoClose(True)
+            progress.setAutoReset(True)
+            progress.show()
 
             # Генерация вариантов
-            for i in range(1, self.gen_count.value() + 1):
+            for i in range(1, total + 1):
                 if progress.wasCanceled():
+                    self.update_status("Генерация отменена", "warning")
                     break
 
                 progress.setValue(i)
-                self.update_status(f"Генерация варианта {i} из {self.gen_count.value()}...")
+                self.update_status(f"Генерация варианта {i} из {total}...")
+                QApplication.processEvents()  # Обновляем интерфейс
 
                 result = self.pipe(
                     prompt=prompt,
                     negative_prompt=negative_prompt,
                     image=init_image,
-                    strength=0.45,
+                    strength=0.50,
                     guidance_scale=9.0,
                     num_inference_steps=60,
                     generator=torch.Generator(self.device).manual_seed(42 + i),
                     eta=0.9
                 ).images[0]
 
-                # Постобработка
                 if design['style'] == 'geometric':
                     result = result.filter(ImageFilter.UnsharpMask(radius=1, percent=120, threshold=2))
                 else:
-                    result = result.filter(ImageFilter.SMOOTH_MORE)
-                    result = result.filter(ImageFilter.DETAIL)
+                    result = result.filter(ImageFilter.SMOOTH_MORE).filter(ImageFilter.DETAIL)
 
-                # Сохранение
                 output_path = self.output_dir_path / f"pattern_v{i}.png"
                 result.save(output_path, quality=95, subsampling=0)
                 self.update_status(f"Сохранен: {output_path.name}")
+                QApplication.processEvents()
 
             progress.close()
+
             QMessageBox.information(self, "Готово", f"Успешно сгенерировано {i} паттернов!")
             self.update_status("Генерация завершена", "success")
 
