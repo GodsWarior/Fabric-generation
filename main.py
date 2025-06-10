@@ -9,6 +9,7 @@ from PIL import Image, ImageFilter
 from colorthief import ColorThief
 from diffusers import StableDiffusionImg2ImgPipeline, EulerAncestralDiscreteScheduler
 
+aaa = object
 
 class PatternGeneratorApp(QMainWindow):
     def __init__(self):
@@ -322,12 +323,13 @@ tiled, grid, chessboard, perfect symmetry
                     prompt=prompt,
                     negative_prompt=negative_prompt,
                     image=init_image,
-                    strength=0.50,
+                    strength=0.55,
                     guidance_scale=9.0,
                     num_inference_steps=60,
                     generator=torch.Generator(self.device).manual_seed(42 + i),
                     eta=0.9
                 ).images[0]
+
 
                 if design['style'] == 'geometric':
                     result = result.filter(ImageFilter.UnsharpMask(radius=1, percent=120, threshold=2))
