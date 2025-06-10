@@ -268,6 +268,7 @@ class PatternGeneratorApp(QMainWindow):
             }
         """)
 
+
         # Статус бар
         self.status_bar = QLabel()
         self.status_bar.setAlignment(Qt.AlignCenter)

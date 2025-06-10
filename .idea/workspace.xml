@@ -5,11 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="53060837-14ac-4512-a6f0-dc36ff0a3a7a" name="Changes" comment="init">
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cache/ViT-L-14_openai_artists.safetensors" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cache/ViT-L-14_openai_flavors.safetensors" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cache/ViT-L-14_openai_mediums.safetensors" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cache/ViT-L-14_openai_movements.safetensors" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cache/ViT-L-14_openai_negative.safetensors" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cache/ViT-L-14_openai_trendings.safetensors" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/FabricGeneration.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FabricGeneration.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +28,7 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
