@@ -1,0 +1,7 @@
+PyQt5
+opencv-python
+torch
+numpy
+Pillow
+colorthief
+diffusers
